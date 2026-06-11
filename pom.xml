@@ -40,23 +40,26 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--gemini 의존성-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-google-genai</artifactId>
         </dependency>
+        <!--Ollama 의존성-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-ollama</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
+    <!--Spring AI BOM-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -69,6 +72,17 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- Maven repository를 추가 -->
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <plugin>
