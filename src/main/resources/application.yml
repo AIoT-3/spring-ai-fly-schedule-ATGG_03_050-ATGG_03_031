@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: spring-ai-fly-schedule
+  profiles:
+    active: dev
+  ai:
+    #gemini 설정
+    google:
+      chat:
+        options.model: gemini-2.5-flash
+
+    # Ollama 설정
+    ollama:
+      base-url: http://localhost:11434
+#      base-url: http://ollama.java21.net <- ollama 로컬에 다운받지 않은경우는 이 주소 사용하시면 됩니다.(spring-ai-basic 6-2 참고)
+      chat:
+        options.model: qwen2.5:1.5b
+      embedding:
+        option:
+          model: bge-m3
+          enabled: true
+
+#Google Gemini API Key(Gemini 사용 시), 공공데이터 포털 서비스 키(항공편 검색 API용)는
+#application-dev.yml 파일 만들어서 따로 관리해주세요 -> git에 추적 되지 않게 gitignore에 추가 및 캐시삭제
+#(fly-schedule README.md 사전 요구사항 참고)
