@@ -12,9 +12,11 @@ spring:
     # Ollama 설정
     ollama:
       base-url: http://localhost:11434
-#      base-url: http://ollama.java21.net <- ollama 로컬에 다운받지 않은경우는 이 주소 사용하시면 됩니다.(spring-ai-basic 6-2 참고)
+#      base-url: http://ollama.java21.net <- ollama 로컬에 다운받지 않은경우는 이 주소 사용하시면 됩니다.
       chat:
-        options.model: qwen2.5:1.5b
+        options:
+          model: qwen2.5:1.5b
+
       embedding:
         option:
           model: bge-m3
