@@ -1,0 +1,46 @@
+package com.nhnacademy.flyschedule.service.agent.util;
+
+import com.nhnacademy.flyschedule.dto.Flight.FlightInfoResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
+@Service
+public class PriceFilterAgent {
+    public List<FlightInfoResponse> filterByPriceRanger(
+        List<FlightInfoResponse> flightInfoResponseList,
+        Integer minPrice,
+        Integer maxPrice
+    ){
+        if(flightInfoResponseList == null || flightInfoResponseList.isEmpty()){
+            return List.of();
+        }
+
+        return flightInfoResponseList.stream()
+                .filter(flightInfoResponse -> {
+                    Integer economyPrice = flightInfoResponse.getEconomyCharge();
+                    Integer prestigePrice = flightInfoResponse.getPrestigeCharge();
+                    if(economyPrice== null || economyPrice == 0 ) return false;
+                    if(minPrice != null && economyPrice < minPrice)return false;
+                    return maxPrice == null || economyPrice <= maxPrice;
+
+                }).collect(Collectors.toList());
+    }
+
+    public FlightInfoResponse findCheapest(List<FlightInfoResponse> flightInfoResponseList){
+        return flightInfoResponseList.stream()
+                .filter(f -> f.getEconomyCharge() != null && f.getEconomyCharge() > 0)
+                .min((f1, f2) -> f1.getEconomyCharge().compareTo(f2.getEconomyCharge()))
+                .orElse(null);
+    }
+    public double calculateAveragePrice(List<FlightInfoResponse> flights) {
+        return flights.stream()
+                .filter(f -> f.getEconomyCharge() != null && f.getEconomyCharge() > 0)
+                .mapToInt(FlightInfoResponse::getEconomyCharge)
+                .average()
+                .orElse(0.0);
+    }
+}

@@ -30,11 +30,12 @@ spring:
 logging:
   level:
     com.nhnacademy.flyschedule: DEBUG
-    org.springframework.ai: DEBUG
+    org.springframework.ai.chat.client: DEBUG
 
 # 공공데이터 포털 서비스 설정
 data-go-kr:
   api:
+    url: https://apis.data.go.kr/1613000/DmstcFlightNvgInfo
     service-key: ${DATA_GO_API_KEY}
 
 #Google Gemini API Key(Gemini 사용 시), 공공데이터 포털 서비스 키(항공편 검색 API용)는 환경변수로 따로 관리해주세요
