@@ -5,11 +5,12 @@ import com.nhnacademy.flyschedule.service.agent.util.*;
 import com.nhnacademy.flyschedule.service.api.ApiClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //코디네이터 에이전트
 @Service
@@ -30,20 +31,59 @@ public class FlightSearchAgent {
             String relativeDate//상대적 날짜
     ){
 
+        String depPlandTime = dateParserAgent.parseDate(relativeDate);
 
+        String depAirportId = airportCodeAgent.getAirportCode(departure);
+        String arrAirportId = airportCodeAgent.getAirportCode(arrival);
 
-        return Map.of();
+        List<FlightInfoResponse> flightInfoResponseList = apiClientService.getFlightSchedule(depAirportId, arrAirportId, depPlandTime);
+        if(flightInfoResponseList.isEmpty()){
+            return null;
+        }
+
+        return groupingAgent.groupByAirline(flightInfoResponseList);
     }
 
     public Map<String, List<FlightInfoResponse>> searchWithTimeFilter(
-
+            String departure,//출발지
+            String arrival,//도착지
+            String relativeDate,//상대적 날짜
+            String timeInput//출발시간
     ){
+        Map<String, List<FlightInfoResponse>> flightsGroupByAirline = searchAndGroupByAirline(departure, arrival, relativeDate);
+
+        LocalTime afterTime = timeFilterAgent.parseTime(timeInput);
+        Map<String, List<FlightInfoResponse>> flightInfoResponseList = flightsGroupByAirline.entrySet().stream()
+                .collect(
+                        Collectors.toMap(
+                            Map.Entry::getKey,
+                                stringListEntry -> timeFilterAgent.filterAfterTime(
+                                        stringListEntry.getValue(),afterTime
+                                )
+                        )
+                );
+
+
         return Map.of();
     }
 
     public Map<String, List<FlightInfoResponse>> searchWithPriceFilter(
-
+            String departure,//출발지
+            String arrival,//도착지
+            String relativeDate,//상대적 날짜
+            Integer minPrice,//최소금액
+            Integer maxPrice//최대금액
     ){
-        return Map.of();
+        Map<String, List<FlightInfoResponse>> flightsGroupByAirline = searchAndGroupByAirline(departure, arrival, relativeDate);
+
+        return flightsGroupByAirline.entrySet().stream()
+                .collect(
+                        Collectors.toMap(
+                                Map.Entry::getKey,
+                                stringListEntry -> priceFilterAgent.filterByPriceRange(
+                                        stringListEntry.getValue(), minPrice, maxPrice
+                                )
+                        )
+                );
     }
 }

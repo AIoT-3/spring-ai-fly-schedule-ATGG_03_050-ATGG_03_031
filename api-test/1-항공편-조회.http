@@ -1,7 +1,7 @@
 ### @env dev
 @serviceKey = 22a976de612a3f85e7a8fd71af9af8b77110533b454687acacfe441b2c3d0dfc
 @baseUrl = https://apis.data.go.kr/1613000/DmstcFlightNvgInfo
-@depPlandTime = 20260310
+@depPlandTime = 20260710
 
 ### 항공편 조회 (GET) - 광주 → 제주
 GET {{baseUrl}}/GetFlightOpratInfoList?serviceKey={{serviceKey}}&pageNo=1&numOfRows=10&_type=json&depAirportId=NAARKJJ&arrAirportId=NAARKPC&depPlandTime={{depPlandTime}}

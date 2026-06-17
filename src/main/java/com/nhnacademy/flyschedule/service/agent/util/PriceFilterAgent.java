@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class PriceFilterAgent {
-    public List<FlightInfoResponse> filterByPriceRanger(
+    public List<FlightInfoResponse> filterByPriceRange(
         List<FlightInfoResponse> flightInfoResponseList,
         Integer minPrice,
         Integer maxPrice
