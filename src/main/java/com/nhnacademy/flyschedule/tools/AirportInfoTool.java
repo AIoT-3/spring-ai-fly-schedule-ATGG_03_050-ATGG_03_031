@@ -1,6 +1,9 @@
 package com.nhnacademy.flyschedule.tools;
 
 import com.nhnacademy.flyschedule.dto.airprt.AirportInfoResponse;
+import com.nhnacademy.flyschedule.service.agent.util.AirportCodeAgent;
+import com.nhnacademy.flyschedule.service.agent.util.AirportListAgent;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
@@ -9,7 +12,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AirportInfoTool implements MyAiTool {
+
+    private final AirportListAgent airportListAgent;
+    private final AirportCodeAgent airportCodeAgent;
+
 
     //전체 공항 목록
     @Tool(
@@ -21,7 +29,7 @@ public class AirportInfoTool implements MyAiTool {
     public List<AirportInfoResponse> getAirportList() {
         log.info("getAirportList tool 호출");
 
-        return List.of();
+        return airportListAgent.getAirportList();
     }
 
     //공항 코드 조회
@@ -38,7 +46,7 @@ public class AirportInfoTool implements MyAiTool {
     ){
         log.info("getAirportCode tool 호출");
 
-        return null;
+        return airportCodeAgent.getAirportCode(airprtNm);
     }
 
 }

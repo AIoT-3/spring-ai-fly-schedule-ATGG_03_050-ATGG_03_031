@@ -81,7 +81,7 @@ public class ApiClientService {
                 .body(ApiAirportResponseWrapper.class);
 
 
-        if(responseWrapper != null){
+        if(responseWrapper != null  &&  "00".equals(responseWrapper.getResultCode())){
             return responseWrapper.getItems() != null? responseWrapper.getItems() : Collections.emptyList();
         }
         return Collections.emptyList();
@@ -98,7 +98,7 @@ public class ApiClientService {
                 .body(ApiAirlineResponseWrapper.class);
 
 
-        if(responseWrapper != null){
+        if(responseWrapper != null  &&  "00".equals(responseWrapper.getResultCode())){
             return responseWrapper.getItems() != null? responseWrapper.getItems() : Collections.emptyList();
         }
         return Collections.emptyList();

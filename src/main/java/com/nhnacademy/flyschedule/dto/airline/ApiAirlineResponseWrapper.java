@@ -35,4 +35,9 @@ public class ApiAirlineResponseWrapper {
                 ? this.response.body.items.getItems() : null;
     }
 
+    public String getResultCode(){
+        return response != null && response.header != null
+                ? response.header.getResultCode() : null;
+    }
+
 }
