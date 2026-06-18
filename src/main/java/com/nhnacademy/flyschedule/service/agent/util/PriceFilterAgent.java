@@ -15,6 +15,8 @@ public class PriceFilterAgent {
         Integer minPrice,
         Integer maxPrice
     ){
+        log.info("PriceFilterAgent: filterByPriceRange 호출");
+
         if(flightInfoResponseList == null || flightInfoResponseList.isEmpty()){
             return List.of();
         }
@@ -31,12 +33,16 @@ public class PriceFilterAgent {
     }
 
     public FlightInfoResponse findCheapest(List<FlightInfoResponse> flightInfoResponseList){
+        log.info("PriceFilterAgent: findCheapest 호출");
+
         return flightInfoResponseList.stream()
                 .filter(f -> f.getEconomyCharge() != null && f.getEconomyCharge() > 0)
                 .min((f1, f2) -> f1.getEconomyCharge().compareTo(f2.getEconomyCharge()))
                 .orElse(null);
     }
     public double calculateAveragePrice(List<FlightInfoResponse> flights) {
+        log.info("PriceFilterAgent: calculateAveragePrice 호출");
+
         return flights.stream()
                 .filter(f -> f.getEconomyCharge() != null && f.getEconomyCharge() > 0)
                 .mapToInt(FlightInfoResponse::getEconomyCharge)

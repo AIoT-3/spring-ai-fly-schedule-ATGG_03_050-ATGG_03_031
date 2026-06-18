@@ -30,7 +30,7 @@ public class FlightSearchAgent {
             String arrival,//도착지
             String relativeDate//상대적 날짜
     ){
-
+        log.info("FlightSearchAgent: searchAndGroupByAirline 호출");
         String depPlandTime = dateParserAgent.parseDate(relativeDate);
 
         String depAirportId = airportCodeAgent.getAirportCode(departure);
@@ -50,6 +50,8 @@ public class FlightSearchAgent {
             String relativeDate,//상대적 날짜
             String timeInput//출발시간
     ){
+        log.info("FlightSearchAgent: searchWithTimeFilter 호출");
+
         Map<String, List<FlightInfoResponse>> flightsGroupByAirline = searchAndGroupByAirline(departure, arrival, relativeDate);
 
         LocalTime afterTime = timeFilterAgent.parseTime(timeInput);
@@ -74,6 +76,8 @@ public class FlightSearchAgent {
             Integer minPrice,//최소금액
             Integer maxPrice//최대금액
     ){
+        log.info("FlightSearchAgent: searchWithPriceFilter 호출");
+
         Map<String, List<FlightInfoResponse>> flightsGroupByAirline = searchAndGroupByAirline(departure, arrival, relativeDate);
 
         return flightsGroupByAirline.entrySet().stream()

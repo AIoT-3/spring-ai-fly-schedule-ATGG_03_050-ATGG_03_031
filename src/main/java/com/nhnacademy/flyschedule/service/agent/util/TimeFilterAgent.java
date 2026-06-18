@@ -15,6 +15,8 @@ public class TimeFilterAgent {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HHmm");
 
     public LocalTime parseTime(String timeInput){
+        log.info("TimeFilterAgent: filterAfterTime 호출");
+
         if(timeInput == null || timeInput.isBlank()){
             throw new IllegalArgumentException("시간을 입력해주세요");
         }
@@ -53,6 +55,8 @@ public class TimeFilterAgent {
     }
 
     public List<FlightInfoResponse> filterAfterTime(List<FlightInfoResponse> flightInfoResponseList, LocalTime afterTime){
+        log.info("TimeFilterAgent: filterAfterTime 호출");
+
         if (flightInfoResponseList == null || flightInfoResponseList.isEmpty()) {
             return List.of();
         }

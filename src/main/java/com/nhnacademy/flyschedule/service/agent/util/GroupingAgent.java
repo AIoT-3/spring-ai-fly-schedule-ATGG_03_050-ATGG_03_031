@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 @Service
 public class GroupingAgent {
     public Map<String, List<FlightInfoResponse>> groupByAirline(List<FlightInfoResponse> flightInfoResponseList){
+        log.info("GroupingAgent: groupByAirline 호출");
+
         if(flightInfoResponseList == null || flightInfoResponseList.isEmpty()){
             return new TreeMap<>();
         }

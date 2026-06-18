@@ -1,10 +1,12 @@
 package com.nhnacademy.flyschedule.service.agent.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class AirportCodeAgent {
     private static final Map<String, String> AIRPORT_CODE_MAP = new HashMap<>();
@@ -50,6 +52,8 @@ public class AirportCodeAgent {
         AIRPORT_CODE_MAP.put("제주공항", "NAARKPC");
     }
     public String getAirportCode(String airportName){
+        log.info("AirportCodeAgent: getAirportCode 호출");
+
         if(airportName == null || airportName.isBlank()){
             throw new IllegalArgumentException("공항 이름을 입력해주세요");
         }
@@ -67,6 +71,8 @@ public class AirportCodeAgent {
     }
 
     public boolean isValidAirport(String airportName){
+        log.info("AirportCodeAgent: isValidAirport 호출");
+
         if(airportName == null || airportName.isBlank()){
             return false;
         }

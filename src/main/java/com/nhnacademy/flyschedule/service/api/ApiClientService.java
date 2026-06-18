@@ -45,17 +45,26 @@ public class ApiClientService {
 
         String url = properties.getUrl() + "/GetFlightOpratInfoList"
                 + "?serviceKey=" + properties.getServiceKey()
-                + "&pageNo=1&numOfRows=10&_type=json"
+                + "&pageNo=1"
+                + "&numOfRows=100"
+                + "&_type=json"
                 + "&depAirportId=" + encodeParam(depAirportId)
                 + "&arrAirportId=" + encodeParam(arrAirportId)
                 + "&depPlandTime=" + encodeParam(depPlandTime);
+
+        log.info("항공편 API 호출 URL: {}", url);
+
 
         ApiFlightResponseWrapper responseWrapper = restClient.get()
                 .uri(url)
                 .retrieve()//실제 네트워크 통신 발생(HTTP 요청을 실제로 전송)
                 .body(ApiFlightResponseWrapper.class);
 
-        if(responseWrapper != null){
+
+        log.info("responseWrapper: {}",responseWrapper);
+
+
+        if(responseWrapper != null &&  "00".equals(responseWrapper.getResultCode())){
             return responseWrapper.getItems() != null? responseWrapper.getItems() : Collections.emptyList();
         }
         return Collections.emptyList();

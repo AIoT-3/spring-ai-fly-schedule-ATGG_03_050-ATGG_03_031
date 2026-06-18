@@ -1,5 +1,6 @@
 package com.nhnacademy.flyschedule.config;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -10,4 +11,5 @@ import org.springframework.stereotype.Component;
 public class DataGoKrApiProperties {
     private String url;
     private String serviceKey;
+
 }
