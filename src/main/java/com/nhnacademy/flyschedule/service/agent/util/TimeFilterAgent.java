@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 public class TimeFilterAgent {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HHmm");
 
+
     public LocalTime parseTime(String timeInput){
+        //TODO 분 단위도 파싱할수 있게 하기
         log.info("TimeFilterAgent: filterAfterTime 호출");
 
         if(timeInput == null || timeInput.isBlank()){
             throw new IllegalArgumentException("시간을 입력해주세요");
         }
-
 
         String normalized = timeInput.trim().toLowerCase();
 
@@ -82,8 +83,24 @@ public class TimeFilterAgent {
     }
 
     public List<FlightInfoResponse> filterBeforeTime(
-
+            List<FlightInfoResponse> flightInfoResponseList, LocalTime beforeTime
     ){
-        return List.of();
+        log.info("TimeFilterAgent: filterBeforeTime 호출");
+
+        if (flightInfoResponseList == null || flightInfoResponseList.isEmpty()) {
+            return List.of();
+        }
+
+        return flightInfoResponseList.stream()
+                .filter(flightInfoResponse -> {
+                    try{
+                        String timePart = flightInfoResponse.getDepPlandTime().substring(8,12);//출발 시간 추출
+                        LocalTime departureTime = LocalTime.parse(timePart, TIME_FORMATTER);
+                        return !departureTime.isAfter(beforeTime);
+                    }catch(Exception e){
+                        log.warn("시간 파싱 실패: {}", flightInfoResponse.getDepPlandTime());
+                        return false;
+                    }
+                }).collect(Collectors.toList());
     }
 }
