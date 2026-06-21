@@ -1,6 +1,7 @@
 package com.nhnacademy.flyschedule.tools;
 
 import com.nhnacademy.flyschedule.dto.airline.AirlineInfoResponse;
+import com.nhnacademy.flyschedule.service.agent.util.AirlineCode;
 import com.nhnacademy.flyschedule.service.agent.util.AirlineCodeAgent;
 import com.nhnacademy.flyschedule.service.agent.util.AirlineListAgent;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class AirlineInfoTool implements MyAiTool{
      
      반환값: airlineNm으로 넘겨준 항공사의 항공사ID(String)
     """)
-    public String getAirlineId(
+    public AirlineCode getAirlineId(
             @ToolParam(description = "항공사 이름(예: 대한항공, 아시아나항공, 티웨이항공)") String airlineNm
     ){
         log.info("getAirlineId tool 호출");

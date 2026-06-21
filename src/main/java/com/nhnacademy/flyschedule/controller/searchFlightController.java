@@ -23,7 +23,7 @@ public class searchFlightController {
     @GetMapping("/ollama")
     public String searchFlight(@RequestParam String question){
        String response = ollamaChatClientBuilder.build().prompt()
-               .system("너는 항공편 검색 도우미야. 친절하게 답변해줘")
+               .system("너는 항공편 검색 도우미야. 친절하게 답변해줘. 사용자가 주는 값 외에 항공편을 필터링할 가격대나 출발 시간대를 스스로 판단하지마")
                .user(question)
                .call()
                .content();

@@ -31,12 +31,15 @@ public class FlightSearchAgent {
             String relativeDate//상대적 날짜
     ){
         log.info("FlightSearchAgent: searchAndGroupByAirline 호출");
-        String depPlandTime = dateParserAgent.parseDate(relativeDate);
+        String parsedDate = dateParserAgent.parseDate(relativeDate);
+        log.info("DateParserAgent: {} → {}", relativeDate, parsedDate);
+
 
         String depAirportId = airportCodeAgent.getAirportCode(departure);
         String arrAirportId = airportCodeAgent.getAirportCode(arrival);
+        log.info("AirportCodeAgent: {} → {}, {} → {}", departure, depAirportId, arrival, arrAirportId);
 
-        List<FlightInfoResponse> flightInfoResponseList = apiClientService.getFlightSchedule(depAirportId, arrAirportId, depPlandTime);
+        List<FlightInfoResponse> flightInfoResponseList = apiClientService.getFlightSchedule(depAirportId, arrAirportId, parsedDate);
         if(flightInfoResponseList.isEmpty()){
             return null;
         }
@@ -66,7 +69,7 @@ public class FlightSearchAgent {
                 );
 
 
-        return Map.of();
+        return flightInfoResponseList;
     }
 
     public Map<String, List<FlightInfoResponse>> searchWithPriceFilter(

@@ -34,17 +34,24 @@ public class TimeFilterAgent {
                 }
                 return LocalTime.of(hour,0);
             }
-        }
-
-        if(normalized.contains("오전")){
+        }else if(normalized.contains("오전")){
             String numbersOnly = normalized.replaceAll("[^0-9]", "");
             if(!numbersOnly.isEmpty()){
                 int hour = Integer.parseInt(numbersOnly);
-                if(hour < 0 || hour >= 12){
+                if(hour < 0 || hour > 12){
                     throw new IllegalArgumentException("시간 형식이 올바르지 않습니다.");
                 }
                 if(hour == 12){
                     hour = 0;
+                }
+                return LocalTime.of(hour, 0);
+            }
+        } else if (normalized.contains("시")) {
+            String numbersOnly = normalized.replaceAll("[^0-9]", "");
+            if(!numbersOnly.isEmpty()) {
+                int hour = Integer.parseInt(numbersOnly);
+                if(hour<0 || hour > 24){
+                    throw new IllegalArgumentException("시간 형식이 올바르지 않습니다.");
                 }
                 return LocalTime.of(hour, 0);
             }
@@ -72,5 +79,11 @@ public class TimeFilterAgent {
                        return false;
                     }
                 }).collect(Collectors.toList());
+    }
+
+    public List<FlightInfoResponse> filterBeforeTime(
+
+    ){
+        return List.of();
     }
 }
