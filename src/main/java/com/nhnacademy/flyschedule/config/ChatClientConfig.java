@@ -24,21 +24,21 @@ public class ChatClientConfig {
             List<MyAiTool> tools
     ){
         return ChatClient.builder(ollamaChatModel)
-                .defaultTools(tools.toArray(new Object[0]))
+                .defaultTools(tools.toArray(Object[]::new))
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor()
                 );
     }
 
-//    @Bean
-//    public ChatClient.Builder geminiChatClientBuilder(
-//            @Qualifier("googleGenAiChatModel") ChatModel geminiChatModel,
-//            List<MyAiTool> tools
-//    ){
-//        return ChatClient.builder(geminiChatModel)
-//                .defaultTools(tools.toArray(new Object[0]))
-//                .defaultAdvisors(
-//                        new SimpleLoggerAdvisor()
-//                );
-//    }
+    @Bean
+    public ChatClient.Builder geminiChatClientBuilder(
+            @Qualifier("googleGenAiChatModel") ChatModel geminiChatModel,
+            List<MyAiTool> tools
+    ){
+        return ChatClient.builder(geminiChatModel)
+                .defaultTools(tools.toArray(new Object[0]))
+                .defaultAdvisors(
+                        new SimpleLoggerAdvisor()
+                );
+    }
 }
