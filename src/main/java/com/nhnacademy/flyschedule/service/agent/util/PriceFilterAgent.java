@@ -32,6 +32,7 @@ public class PriceFilterAgent {
                 }).collect(Collectors.toList());
     }
 
+    //최저가 항공편 조회
     public FlightInfoResponse findCheapest(List<FlightInfoResponse> flightInfoResponseList){
         log.info("PriceFilterAgent: findCheapest 호출");
 
@@ -40,6 +41,8 @@ public class PriceFilterAgent {
                 .min((f1, f2) -> f1.getEconomyCharge().compareTo(f2.getEconomyCharge()))
                 .orElse(null);
     }
+
+    //평균 가격 계산
     public double calculateAveragePrice(List<FlightInfoResponse> flights) {
         log.info("PriceFilterAgent: calculateAveragePrice 호출");
 

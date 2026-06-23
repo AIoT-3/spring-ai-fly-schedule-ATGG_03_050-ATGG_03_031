@@ -26,6 +26,7 @@ spring:
           temperature: 0.0
           timeout: 300s
 
+
 # 로깅 설정
 logging:
   level:
